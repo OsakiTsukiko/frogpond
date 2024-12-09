@@ -15,6 +15,8 @@ type Config struct {
 		// TODO: ADD SECURE PORT and NOT SECURE PORT
 		JWTSecretKey string `envconfig:"FP_JWT_SECRET_KEY"`
 		Domain       string `envconfig:"FP_DOMAIN"`
+
+		DefaultRedirect string
 	}
 
 	DataBase struct {
@@ -33,6 +35,8 @@ func LoadConfig() Config {
 	if err != nil {
 		log.Fatalf("🚩 Error loading configuration: %v", err)
 	}
+
+	cfg.Server.DefaultRedirect = "/"
 
 	// check if the fields are set
 	// TODO: AUTOMATE THIS (maybe)
