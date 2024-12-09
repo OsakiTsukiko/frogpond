@@ -15,7 +15,12 @@ func HomeGET(c *gin.Context) {
 		// redirect to login if session invalid
 	}
 
-	c.JSON(http.StatusOK, gin.H{
+	/* c.JSON(http.StatusOK, gin.H{
+		"username": username,
+		"email":    email,
+	}) */
+
+	c.HTML(http.StatusOK, "home.html", gin.H{
 		"username": username,
 		"email":    email,
 	})

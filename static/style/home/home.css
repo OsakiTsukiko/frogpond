@@ -100,64 +100,21 @@ body {
   flex-direction: column;
   gap: 15px;
 }
-.content .title {
-  color: var(--accent-2);
-  font-weight: 900;
-  font-size: 2.5em;
-}
-.content .title i {
-  width: 0.8em;
-  height: 0.8em;
-}
-.content .title .subtitle {
-  color: var(--accent-2-0);
-  font-weight: 900;
-  font-size: 0.6em;
-}
-.content form {
+.content .user {
   width: 100%;
+  box-sizing: border-box;
+  padding: 20px;
   display: flex;
   flex-direction: column;
-  gap: 15px;
-}
-.content form .text-input {
-  width: 100%;
-  box-sizing: border-box;
-  padding: 10px;
-  display: flex;
-  gap: 15px;
-  align-items: center;
+  gap: 5px;
   border-radius: 5px;
-  border: 1px solid var(--background-1-2);
+  border: 1px solid var(--background-1-3);
   background: var(--background-1-1);
+  color: var(--accent-2-0-1);
+  font-size: 1.5em;
+  font-weight: 900;
 }
-.content form .text-input input {
-  flex: 1;
-  height: 100%;
-  box-sizing: border-box;
-  font-size: 1em;
-  color: var(--accent-2);
-  border: 0;
-  background: transparent;
-}
-.content form .text-input input::-moz-placeholder {
-  color: var(--accent-2-0);
-  opacity: 1;
-}
-.content form .text-input input::placeholder {
-  color: var(--accent-2-0);
-  opacity: 1;
-}
-.content form .text-input input:focus {
-  outline: none;
-}
-.content form .text-input .input-label {
-  height: 100%;
-  color: var(--accent-2);
-  pointer-events: none;
-  font-weight: 700;
-}
-.content form .button-input {
+.content .button-input {
   width: 100%;
   box-sizing: border-box;
   padding: 10px;
@@ -170,40 +127,16 @@ body {
   cursor: pointer;
   transition: 0.125s;
 }
-.content form .button-input:hover {
+.content .button-input:hover {
   border: 1px solid var(--accent-2);
   background: var(--accent-2);
   color: var(--background-1-1);
   cursor: pointer;
 }
-.content form .button-input:disabled {
+.content .button-input:disabled {
   border-radius: 5px;
   border: 1px solid var(--background-1-2);
   background: var(--background-1-1);
   color: var(--accent-2-0);
   cursor: not-allowed;
-}
-.content .more {
-  color: var(--accent-2-0);
-  width: 100%;
-  text-align: center;
-  transition: 0.125s;
-}
-.content .more a {
-  text-decoration: underline;
-  font-weight: 900;
-}
-.content .more a:hover {
-  color: var(--accent-2);
-}
-.content .error {
-  width: 100%;
-  box-sizing: border-box;
-  height: -moz-fit-content;
-  height: fit-content;
-  padding: 15px;
-  background: var(--error-1);
-  border: 1px solid var(--error-2);
-  border-radius: 5px;
-  color: var(--error-4);
-}/*# sourceMappingURL=login.css.map */
+}/*# sourceMappingURL=home.css.map */
