@@ -1,0 +1,10 @@
+.error {
+    width: 100%;
+    box-sizing: border-box;
+    height: fit-content;
+    padding: 15px;
+    background: var(--error-1);
+    border: 1px solid var(--error-2);
+    border-radius: 5px;
+    color: var(--error-4);
+}

@@ -1,0 +1,30 @@
+.button-input {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 10px;
+
+    font-weight: 900;
+    font-size: 1.2em;
+
+    border-radius: 5px;
+    border: 1px solid var(--accent-2-0);
+    background: var(--accent-2-0);
+    color: var(--background-1-1);
+    cursor: pointer;
+    transition: .125s;
+
+    &:hover {
+        border: 1px solid var(--accent-2);
+        background: var(--accent-2);
+        color: var(--background-1-1);
+        cursor: pointer;
+    }
+
+    &:disabled {
+        border-radius: 5px;
+        border: 1px solid var(--background-1-2);
+        background: var(--background-1-1);
+        color: var(--accent-2-0);
+        cursor: not-allowed;
+    }
+}

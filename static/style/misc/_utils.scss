@@ -1,0 +1,28 @@
+.frog {
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    background: url('/static/assets/frog.svg') no-repeat center;
+    background-size: contain;
+}
+
+.red {
+    color: indianred;
+}
+
+.link {
+    text-decoration: none;
+    color: inherit;
+
+    &:visited {
+        color: inherit;
+    }
+
+    &:active {
+        color: inherit;
+    }
+}
+
+.display-none {
+    display: none !important;
+}

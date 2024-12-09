@@ -1,0 +1,15 @@
+.more {
+    color: var(--accent-2-0);
+    width: 100%;
+    text-align: center;
+    transition: .125s;
+
+    a {
+        text-decoration: underline;
+        font-weight: 900;
+
+        &:hover {
+            color: var(--accent-2);
+        }
+    }
+}

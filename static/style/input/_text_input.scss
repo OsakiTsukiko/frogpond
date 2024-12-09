@@ -1,0 +1,40 @@
+.text-input {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 10px;
+
+    display: flex;
+    gap: 15px;
+    align-items: center;
+
+    border-radius: 5px;
+    border: 1px solid var(--background-1-2);
+    background: var(--background-1-1);
+
+    input {
+        flex: 1;
+        height: 100%;
+        box-sizing: border-box;
+
+        font-size: 1em;
+        color: var(--accent-2);
+        border: 0;
+        background: transparent;
+
+        &::placeholder {
+            color: var(--accent-2-0);
+            opacity: 1; 
+        }
+
+        &:focus {
+            outline: none;
+        }
+    }
+
+    .input-label {
+        height: 100%;
+        color: var(--accent-2);
+        pointer-events: none; 
+        font-weight: 700;
+    }
+}
