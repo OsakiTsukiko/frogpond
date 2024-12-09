@@ -9,7 +9,8 @@ import (
 
 // Redirect if Already Authentificated
 func AuthMiddleware(c *gin.Context) {
-	if false /* is authentificated */ {
+	_, _, ok := UserFromSession(c)
+	if ok /* is authentificated */ {
 		c.Redirect(http.StatusFound, singleton.CFG.Server.DefaultRedirect)
 		return
 	}
