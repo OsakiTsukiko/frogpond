@@ -42,7 +42,10 @@
             <div class="padding"></div>
 
             <span class="more roboto">Forgot your lily pad password? 🍃</span>
-            <span class="more roboto">New to the pond? <a class="link" href="/auth/register" id="login">Hop over to register!</a> 🌿</span>
+            <span class="more roboto">New to the pond? <a class="link" href="/auth/register" id="register">Hop over to register!</a> 🌿</span>
+            
+            <div class="padding"></div>
+            
             <div class="error roboto display-none" id="error"></div>
 
         </div>
@@ -88,12 +91,12 @@
             const password_inp = document.getElementById("password");
 
             if (username_inp.value.length < 3 || username_inp.value.length > 16) {
-                setError("Username must be between 3 and 16 characters!");
+                showError("Username must be between 3 and 16 characters!");
                 return
             }
 
             if (password_inp.value.length < 8 || password_inp.value.length > 16) {
-                setError("Password must be between 8 and 16 characters!");
+                showError("Password must be between 8 and 16 characters!");
                 return
             }
 
