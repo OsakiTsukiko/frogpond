@@ -9,6 +9,6 @@ import (
 
 func main() {
 	log.Println("🐸 The Pond is Forming!")
-	log.Printf("🐸 Running on domain: %q\n", singleton.CFG.Server.Domain)
-	server.Run()
+	log.Printf("🐸 Running on domain: %q and port: %q\n", singleton.CFG.Server.Domain, singleton.CFG.Server.Port)
+	server.Run() // run server
 }
