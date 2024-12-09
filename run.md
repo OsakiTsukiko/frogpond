@@ -16,4 +16,4 @@ FP_DB_PASSWORD="postgres" # default postgress is postgress
 FP_DB_DATABASE="database_name" # your database name
 ```
 look into `tools/export_env.sh` for an easy way to export a whole .env file at once.
-- go run .
+- go `run .`
