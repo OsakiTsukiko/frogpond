@@ -19,6 +19,7 @@ func Run() {
 	auth_group.GET("/register", handlers.RegisterGET)
 	auth_group.POST("/register", handlers.RegisterPOST)
 	auth_group.GET("/login", handlers.LoginGET)
+	auth_group.POST("/login", handlers.LoginPOST)
 
 	// run gin
 	router.Run(":" + singleton.CFG.Server.Port)
