@@ -7,6 +7,7 @@
 FP_PORT="1234"
 FP_JWT_SECRET_KEY="secret-key"
 FP_DOMAIN="localhost" # or domain (mainly for cookies)
+FP_USE_HTTPS="false"
 
 # DataBase
 FP_DB_HOST="localhost" # mainly for running inside docker

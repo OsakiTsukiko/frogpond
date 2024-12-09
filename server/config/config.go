@@ -2,6 +2,7 @@ package config
 
 import (
 	"log"
+	"os"
 
 	"github.com/kelseyhightower/envconfig"
 )
@@ -17,6 +18,7 @@ type Config struct {
 		Domain       string `envconfig:"FP_DOMAIN"`
 
 		DefaultRedirect string
+		UseHTTPS        bool
 	}
 
 	DataBase struct {
@@ -70,6 +72,14 @@ func LoadConfig() Config {
 
 	if cfg.DataBase.Database == "" {
 		log.Fatalf("🚩 Environment variable %q is empty!", "FP_DB_DATABASE")
+	}
+
+	if os.Getenv("FP_USE_HTTPS") == "true" {
+		cfg.Server.UseHTTPS = true
+	} else if os.Getenv("FP_USE_HTTPS") == "false" {
+		cfg.Server.UseHTTPS = false
+	} else {
+		log.Fatalf("🚩 Environment variable %q is empty or invalid! (true/false)", "FP_USE_HTTPS")
 	}
 
 	return cfg
