@@ -15,6 +15,8 @@ func Run() {
 	router.LoadHTMLGlob("templates/*")
 	router.Static("/static", "static")
 
+	router.GET("/", handlers.HomeGET)
+
 	auth_group := router.Group("/auth", handlers.AuthMiddleware)
 	auth_group.GET("/register", handlers.RegisterGET)
 	auth_group.POST("/register", handlers.RegisterPOST)
