@@ -6,3 +6,7 @@ type DBUser struct {
 	Email        string `gorm:"unique;not null"`
 	PasswordHash string `gorm:"not null"`
 }
+
+func (DBUser) TableName() string {
+	return "users"
+}

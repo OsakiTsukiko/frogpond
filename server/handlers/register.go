@@ -4,6 +4,8 @@ import (
 	"net/http"
 	"net/url"
 
+	"github.com/OsakiTsukiko/frogpond/server/domain"
+	sgl "github.com/OsakiTsukiko/frogpond/server/singleton"
 	"github.com/gin-gonic/gin"
 )
 
@@ -59,7 +61,19 @@ func RegisterPOST(c *gin.Context) {
 		return
 	}
 
-	_ = hashedPassword
+	// Create the new user in the database
+	user := domain.DBUser{
+		Username:     form.Username,
+		Email:        form.Email,
+		PasswordHash: string(hashedPassword),
+	}
+
+	if err := sgl.DATABASE.Create(&user).Error; err != nil {
+		parameters = append(parameters, "error="+url.QueryEscape("Failed to create user in database!"))
+		query := queryFromArray(parameters)
+		c.Redirect(http.StatusFound, "/auth/register"+query)
+		return
+	}
 
 	err = SessionFromUser(c, form.Username, form.Email) // create session cookie
 	if err != nil {                                     // return error if it fails
