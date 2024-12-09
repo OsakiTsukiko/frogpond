@@ -6,7 +6,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func Logout(c *gin.Context) {
+func LogoutGET(c *gin.Context) {
 	ClearSession(c)
 	c.Redirect(http.StatusFound, "/auth/login")
 }

@@ -23,7 +23,7 @@ func Run() {
 	auth_group.GET("/login", handlers.LoginGET)
 	auth_group.POST("/login", handlers.LoginPOST)
 
-	router.GET("/auth/logout", handlers.Logout)
+	router.GET("/auth/logout", handlers.LogoutGET)
 
 	// run gin
 	router.Run(":" + singleton.CFG.Server.Port)
