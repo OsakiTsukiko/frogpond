@@ -17,6 +17,7 @@ func Run() {
 
 	auth_group := router.Group("/auth", handlers.AuthMiddleware)
 	auth_group.GET("/register", handlers.RegisterGET)
+	auth_group.GET("/login", handlers.LoginGET)
 
 	// run gin
 	router.Run(":" + singleton.CFG.Server.Port)
