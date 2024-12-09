@@ -26,3 +26,10 @@
 .display-none {
     display: none !important;
 }
+
+.padding {
+    width: 100%;
+    box-sizing: border-box;
+    height: 0px;
+    // still adds via gap
+}

@@ -156,20 +156,6 @@ body {
   pointer-events: none;
   font-weight: 700;
 }
-.content form .checkbox-input {
-  width: 100%;
-  box-sizing: border-box;
-  padding: 10px;
-  display: flex;
-  gap: 15px;
-  align-items: center;
-}
-.content form .checkbox-input .input-label {
-  height: 100%;
-  color: var(--accent-2);
-  pointer-events: none;
-  font-weight: 700;
-}
 .content form .button-input {
   width: 100%;
   box-sizing: border-box;
@@ -219,4 +205,4 @@ body {
   border: 1px solid var(--error-2);
   border-radius: 5px;
   color: var(--error-4);
-}/*# sourceMappingURL=register.css.map */
+}/*# sourceMappingURL=login.css.map */

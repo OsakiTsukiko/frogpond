@@ -23,6 +23,8 @@
                 </div>
             </div>
 
+            <div class="padding"></div>
+
             <form id="registerForm" method="post" action="/auth/register">
                 <div class="text-input">
                     <input class="roboto" type="text" id="username" name="username" placeholder="Username" autocomplete="username" onchange="checkInput()" onkeyup="checkInput()">
@@ -50,11 +52,13 @@
                 </div>
 
                 <button class="button-input roboto" type="button" id="submit-btn">Hop In!</button>
-
             </form>
+
+            <div class="padding"></div>
 
             <span class="more roboto">Already have a pad? <a class="link" href="/auth/login" id="login">Leap back in!</a> 🌿</span>
             <div class="error roboto display-none" id="error"></div>
+
         </div>
 
     </div>

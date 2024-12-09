@@ -3,9 +3,103 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+
+    <title>Return to the Pond!</title>
+    
+    <link rel="stylesheet" href="/static/style/login/login.css">
+    <link rel="icon" type="image/png" href="/static/assets/frog_128x128.png">
 </head>
 <body>
+
+    <div class="main">
+        
+        <div class="content">
+            
+            <div class="title roboto">
+                Return to the Pond!
+                <i class="frog"></i>
+                <div class="subtitle roboto">
+                    Your lily pad is just a hop away! Login to continue your pond journey.
+                </div>
+            </div>
+
+            <div class="padding"></div>
+
+            <form id="registerForm" method="post" action="/auth/login">
+                <div class="text-input">
+                    <input class="roboto" type="text" id="username" name="username" placeholder="Username" required autocomplete="username" onchange="checkInput()" onkeyup="checkInput()">
+                    <span class="input-label roboto">Your Lily Pad Name</span>
+                </div>
+
+                <div class="text-input">
+                    <input class="roboto" type="password" id="password" name="password" placeholder="Password" required autocomplete="new-password" onchange="checkInput()" onkeyup="checkInput()">
+                    <span class="input-label roboto">Secret Ribbit</span>
+                </div>
+
+                <button class="button-input roboto" type="button" id="submit-btn">Take a Leap In!</button>
+            </form>
+
+            <div class="padding"></div>
+
+            <span class="more roboto">Forgot your lily pad password? 🍃</span>
+            <span class="more roboto">New to the pond? <a class="link" href="/auth/register" id="login">Hop over to register!</a> 🌿</span>
+            <div class="error roboto display-none" id="error"></div>
+
+        </div>
+
+    </div>
+
+    <script>
+        const queryString = window.location.search;
+        const searchParams = new URLSearchParams(queryString);
+
+        const form = document.getElementById("registerForm");
+        const switchAuth = document.getElementById("register");
+        const error_dir = document.getElementById("error");
+
+        if (searchParams.has("error")) {
+            showError(searchParams.get("error"));
+        }
+
+        form.action += queryString;
+        switchAuth.href += queryString;
+        
+        function showError(error) {
+            error_dir.textContent = error
+            if (error == "") {
+                error_dir.classList.add("display-none");
+            } else {
+                error_dir.classList.remove("display-none");
+            }
+        }
+
+        function checkInput() {
+            const username_inp = document.getElementById("username");
+            const password_inp = document.getElementById("password");
+            
+            username_inp.value = username_inp.value.replace(/[^a-zA-Z0-9_.]+/g, "");
+            password_inp.value = password_inp.value.replaceAll(" ", ""); 
+        }
+
+        document.getElementById("submit-btn").onclick = function () {
+            showError("");
+
+            const username_inp = document.getElementById("username");
+            const password_inp = document.getElementById("password");
+
+            if (username_inp.value.length < 3 || username_inp.value.length > 16) {
+                setError("Username must be between 3 and 16 characters!");
+                return
+            }
+
+            if (password_inp.value.length < 8 || password_inp.value.length > 16) {
+                setError("Password must be between 8 and 16 characters!");
+                return
+            }
+
+            form.submit();
+        }
+    </script>
     
 </body>
 </html>
