@@ -1,8 +1,10 @@
 package server
 
 import (
+	"log"
+
 	"github.com/OsakiTsukiko/frogpond/server/handlers"
-	"github.com/OsakiTsukiko/frogpond/server/singleton"
+	sgl "github.com/OsakiTsukiko/frogpond/server/singleton"
 	"github.com/gin-gonic/gin"
 )
 
@@ -25,6 +27,16 @@ func Run() {
 
 	router.GET("/auth/logout", handlers.LogoutGET)
 
-	// run gin
-	router.Run(":" + singleton.CFG.Server.Port)
+	if sgl.CFG.Server.UseHTTPS {
+		err := router.RunTLS(":"+sgl.CFG.Server.Port, sgl.CFG.Server.FullChain, sgl.CFG.Server.PrivKey)
+		if err != nil {
+			log.Fatalf("🚩 Failed to start HTTPS server: %v", err)
+		}
+	} else {
+		// run gin
+		err := router.Run(":" + sgl.CFG.Server.Port)
+		if err != nil {
+			log.Fatalf("🚩 Failed to start HTTP server: %v", err)
+		}
+	}
 }

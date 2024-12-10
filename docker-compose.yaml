@@ -9,7 +9,7 @@ services:
     # ports:
     #   - "5432:5432"
     volumes:
-      - postgres_data:/var/lib/my_postgresql/data
+      - postgres_data:/var/lib/postgresql/data
     networks:
       - frogpond-network
 
@@ -23,6 +23,9 @@ services:
       FP_JWT_SECRET_KEY: ${FP_JWT_SECRET_KEY}
       FP_DOMAIN: ${FP_DOMAIN}
       FP_USE_HTTPS: ${FP_USE_HTTPS}
+      FP_FULLCHAIN: ${FP_FULLCHAIN}
+      FP_PRIVKEY: ${FP_PRIVKEY}
+
       FP_DB_HOST: "postgres"
       FP_DB_PORT: ${FP_DB_PORT}
       FP_DB_USERNAME: ${FP_DB_USERNAME}

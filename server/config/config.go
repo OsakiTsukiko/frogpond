@@ -19,6 +19,9 @@ type Config struct {
 
 		DefaultRedirect string
 		UseHTTPS        bool
+
+		FullChain string `envconfig:"FP_FULLCHAIN"`
+		PrivKey   string `envconfig:"FP_PRIVKEY"`
 	}
 
 	DataBase struct {
@@ -80,6 +83,14 @@ func LoadConfig() Config {
 		cfg.Server.UseHTTPS = false
 	} else {
 		log.Fatalf("🚩 Environment variable %q is empty or invalid! (true/false)", "FP_USE_HTTPS")
+	}
+
+	if cfg.Server.UseHTTPS && cfg.Server.FullChain == "" {
+		log.Fatalf("🚩 Environment variable %q is empty!", "FP_FULLCHAIN")
+	}
+
+	if cfg.Server.UseHTTPS && cfg.Server.PrivKey == "" {
+		log.Fatalf("🚩 Environment variable %q is empty!", "FP_PRIVKEY")
 	}
 
 	return cfg
