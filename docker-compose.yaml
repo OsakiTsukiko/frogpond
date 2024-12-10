@@ -1,0 +1,45 @@
+
+services:
+  postgres:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: ${FP_DB_USERNAME}
+      POSTGRES_PASSWORD: ${FP_DB_PASSWORD}
+      POSTGRES_DB: ${FP_DB_DATABASE}
+    # ports:
+    #   - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/my_postgresql/data
+    networks:
+      - frogpond-network
+
+  frogpond:
+    build:
+      context: .
+      args:
+        FP_PORT: ${FP_PORT}
+    environment:
+      FP_PORT: ${FP_PORT}
+      FP_JWT_SECRET_KEY: ${FP_JWT_SECRET_KEY}
+      FP_DOMAIN: ${FP_DOMAIN}
+      FP_USE_HTTPS: ${FP_USE_HTTPS}
+      FP_DB_HOST: "postgres"
+      FP_DB_PORT: ${FP_DB_PORT}
+      FP_DB_USERNAME: ${FP_DB_USERNAME}
+      FP_DB_PASSWORD: ${FP_DB_PASSWORD}
+      FP_DB_DATABASE: ${FP_DB_DATABASE}
+      
+    ports:
+      - "${FP_DOCKER_PORT}:${FP_PORT}"
+    depends_on:
+      - postgres
+    networks:
+      - frogpond-network
+
+networks:
+  frogpond-network:
+    driver: bridge
+
+volumes:
+  postgres_data:
+    driver: local

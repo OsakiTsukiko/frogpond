@@ -15,6 +15,9 @@ FP_DB_PORT="5432" # default postgres is 5432
 FP_DB_USERNAME="postgres" # default postgress is postgress
 FP_DB_PASSWORD="postgres" # default postgress is postgress
 FP_DB_DATABASE="database_name" # your database name
+
+# DOCKER (COMPOSE)
+FP_DOCKER_PORT="9090" # docker compose port
 ```
 look into `tools/export_env.sh` for an easy way to export a whole .env file at once.
 - `go run .`
