@@ -20,11 +20,17 @@ func RegisterGET(c *gin.Context) {
 }
 
 func RegisterPOST(c *gin.Context) {
-	redirect, has_redirect := c.Params.Get("redirect")
+	// get redirect parameter from query
+	redirect_escaped := c.Query("redirect")
+	has_redirect := redirect_escaped != ""
+	redirect, err := url.QueryUnescape(redirect_escaped)
+	if err != nil {
+		has_redirect = false
+	}
 
 	var parameters = []string{}
 	if has_redirect {
-		parameters = append(parameters, "redirect="+redirect)
+		parameters = append(parameters, "redirect="+redirect_escaped)
 	}
 
 	var form RegisterForm

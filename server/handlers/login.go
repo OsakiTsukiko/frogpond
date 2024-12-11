@@ -19,11 +19,17 @@ func LoginGET(c *gin.Context) {
 }
 
 func LoginPOST(c *gin.Context) {
-	redirect, has_redirect := c.Params.Get("redirect")
+	// get redirect parameter from query
+	redirect_escaped := c.Query("redirect")
+	has_redirect := redirect_escaped != ""
+	redirect, err := url.QueryUnescape(redirect_escaped)
+	if err != nil {
+		has_redirect = false
+	}
 
 	var parameters = []string{}
 	if has_redirect {
-		parameters = append(parameters, "redirect="+redirect)
+		parameters = append(parameters, "redirect="+redirect_escaped)
 	}
 
 	// local database pointer for ease of use
@@ -52,11 +58,10 @@ func LoginPOST(c *gin.Context) {
 	SessionFromUser(c, user.Username, user.Email)
 
 	// redirect after login
-	if has_redirect {
+	if has_redirect { // redirect to parameter if exists
 		c.Redirect(http.StatusFound, redirect)
 		return
 	}
-
 	// redirect to homepage after login
 	c.Redirect(http.StatusFound, "/")
 	return
