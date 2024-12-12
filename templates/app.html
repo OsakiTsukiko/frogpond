@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Lily Pad Key</title>
+
+    <link rel="stylesheet" href="/static/style/app/app.css">
+    <link rel="icon" type="image/png" href="/static/assets/frog_128x128.png">
+</head>
+<body>
+
+    <div class="main">
+        <div class="content">
+
+            <div class="user">
+                <div class="username roboto">User: {{ .username }}</div>
+                <div class="email roboto">Mail: {{ .email }}</div>
+            </div>
+
+            <div class="client">
+                <div class="name roboto">App <u style="color: var(--accent-2-0);">{{.client_name}}</u> is requesting access to your FrogPond account!</div>
+                <div class="more roboto">If you think this is not you, please look at your authorized apps section on the HOME page!</div>
+                <div class="website roboto {{.has_website}}">App Website: {{.website}}</div>
+            </div>
+
+            <form action="/auth/app" method="post">
+                <!-- maybe look for a better way? -->
+                <input type="text" name="client_name" value="{{.client_name}}" style="display: none;">
+                <input type="text" name="website" value="{{.website}}" style="display: none;">
+                <button class="button-input roboto" type="submit" id="logout-button">Authorize!</button>
+            </form>
+        </div>
+    </div>
+    
+</body>
+</html>

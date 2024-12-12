@@ -25,6 +25,10 @@ func Run() {
 	auth_group.GET("/login", handlers.LoginGET)
 	auth_group.POST("/login", handlers.LoginPOST)
 
+	req_auth_group := router.Group("/auth", handlers.ReqAuthMiddleware)
+	req_auth_group.GET("/app", handlers.AppGET)
+	req_auth_group.POST("/app", handlers.AppPOST)
+
 	router.GET("/auth/logout", handlers.LogoutGET)
 
 	if sgl.CFG.Server.UseHTTPS {
