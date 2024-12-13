@@ -3,7 +3,6 @@ package handlers
 import (
 	"crypto/rand"
 	"encoding/base64"
-	"fmt"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -25,8 +24,6 @@ func AppGET(c *gin.Context) {
 	has_client_name := client_name != ""
 	website := c.Query("website")
 	has_website := website != ""
-
-	fmt.Print("AAAA", client_name, has_client_name, website, has_website, "AAAA")
 
 	if !has_client_name {
 		c.HTML(http.StatusOK, "error.html", gin.H{
