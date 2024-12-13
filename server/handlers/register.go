@@ -68,7 +68,7 @@ func RegisterPOST(c *gin.Context) {
 	}
 
 	// Create the new user in the database
-	user := domain.DBUser{
+	user := domain.User{
 		Username:     form.Username,
 		Email:        form.Email,
 		PasswordHash: string(hashedPassword),

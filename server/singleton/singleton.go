@@ -34,9 +34,15 @@ func initDatabase() {
 	}
 
 	// migrate the user model (creates the table if it doesn't exist)
-	err = DATABASE.AutoMigrate(&domain.DBUser{})
+	err = DATABASE.AutoMigrate(&domain.User{})
 	if err != nil {
 		log.Fatalf("🚩 Failed to migrate database: %v", err)
+	}
+
+	// migrate the token model (creates the table if it doesn't exist)
+	err = DATABASE.AutoMigrate(&domain.Token{})
+	if err != nil {
+		log.Fatalf("🚩 Failed to migrate tokens table: %v", err)
 	}
 }
 
