@@ -12,8 +12,6 @@ import (
 // keep all errors custom as upstream
 // returns them to the user
 func GetUserFromDatabase(username, password string, db *gorm.DB) (*domain.User, error) {
-	// Assuming you have a DB connection via sqlx
-
 	var user domain.User
 	// query the user by username
 	if err := db.Where("username = ?", username).First(&user).Error; err != nil {
