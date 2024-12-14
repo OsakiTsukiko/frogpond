@@ -5,6 +5,8 @@ import (
 	"encoding/base64"
 	"net/http"
 
+	"github.com/OsakiTsukiko/frogpond/server/database"
+	sgl "github.com/OsakiTsukiko/frogpond/server/singleton"
 	"github.com/gin-gonic/gin"
 )
 
@@ -70,10 +72,58 @@ func AppPOST(c *gin.Context) {
 		return
 	}
 
+	username, _, ok := UserFromSession(c)
+	if !ok {
+		c.HTML(http.StatusOK, "error.html", gin.H{
+			"error": "Unable to access user session! UNREACHABLE!",
+		})
+		return
+	}
+
+	user, err := database.GetUserByUsername(username, sgl.DATABASE)
+	if err != nil {
+		c.HTML(http.StatusOK, "error.html", gin.H{
+			"error": "Unable to access user data!",
+		})
+		return
+	}
+
+	if user == nil {
+		c.HTML(http.StatusOK, "error.html", gin.H{
+			"error": "User not in database!",
+		})
+		return
+	}
+
+	tokens, err := database.GetUserTokens(user.ID, sgl.DATABASE)
+	if err != nil {
+		c.HTML(http.StatusOK, "error.html", gin.H{
+			"error": "Unable to retrieve tokens!",
+		})
+		return
+	}
+
+	for _, token := range tokens {
+		if token.ClientName == form.ClientName {
+			c.HTML(http.StatusOK, "error.html", gin.H{
+				"error": "Token for client " + form.ClientName + " already exists!",
+			})
+			return
+		}
+	}
+
 	token, err := generateToken()
 	if err != nil {
 		c.HTML(http.StatusOK, "error.html", gin.H{
 			"error": "Error generating token!",
+		})
+		return
+	}
+
+	err = database.AddToken(user.ID, token, form.ClientName, sgl.DATABASE)
+	if err != nil {
+		c.HTML(http.StatusOK, "error.html", gin.H{
+			"error": "Error saving token!",
 		})
 		return
 	}

@@ -26,3 +26,14 @@ func GetUserFromDatabase(username, password string, db *gorm.DB) (*domain.User, 
 
 	return &user, nil
 }
+
+func GetUserByUsername(username string, db *gorm.DB) (*domain.User, error) {
+	var user domain.User
+	if err := db.Where("username = ?", username).First(&user).Error; err != nil {
+		if err == gorm.ErrRecordNotFound {
+			return nil, nil // No user found
+		}
+		return nil, err // Any other database error
+	}
+	return &user, nil
+}
