@@ -128,8 +128,9 @@ func AppPOST(c *gin.Context) {
 		return
 	}
 
-	c.HTML(http.StatusOK, "error.html", gin.H{
-		"error": "Token: " + token,
+	c.HTML(http.StatusOK, "token.html", gin.H{
+		"client_name": form.ClientName,
+		"token":       token,
 	})
 	return
 }

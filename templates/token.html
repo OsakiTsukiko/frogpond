@@ -4,20 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Error</title>
+    <title>OAuth Token</title>
 
-    <link rel="stylesheet" href="/static/style/error/error.css">
+    <link rel="stylesheet" href="/static/style/token/token.css">
     <link rel="icon" type="image/png" href="/static/assets/frog_128x128.png">
 </head>
 <body>
     <div class="main">
         <div class="content">
-            <div class="error roboto">
+            <div class="token roboto">
                 <div class="title">
-                    An Error has occurred!
+                    OAuth Token for client <u>{{.client_name}}</u>
                 </div>
                 <div class="more">
-                    {{.error}}
+                    {{.token}}
+                </div>
+                <div class="note">
+                    DO NOT SHARE THIS TOKEN!
                 </div>
             </div>
         </div>
