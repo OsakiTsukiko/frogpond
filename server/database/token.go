@@ -5,12 +5,21 @@ import (
 	"gorm.io/gorm"
 )
 
-func AddToken(userID uint, token string, db *gorm.DB) error {
+func AddToken(userID uint, token string, client_name string, db *gorm.DB) error {
 	newToken := domain.Token{
-		UserID: userID,
-		Token:  token,
+		UserID:     userID,
+		Token:      token,
+		ClientName: client_name,
 	}
 	return db.Create(&newToken).Error
+}
+
+func GetUserTokens(userID uint, db *gorm.DB) ([]domain.Token, error) {
+	var tokens []domain.Token
+	if err := db.Where("user_id = ?", userID).Find(&tokens).Error; err != nil {
+		return nil, err
+	}
+	return tokens, nil
 }
 
 func TokenExists(token string, db *gorm.DB) (bool, error) {
