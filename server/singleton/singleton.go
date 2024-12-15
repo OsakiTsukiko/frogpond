@@ -76,5 +76,5 @@ func init() {
 	log.Println("🐸 Initializing FrogPond Singleton")
 	CFG = config.LoadConfig() // load config from environment variables
 	initDatabase()
-	listTablesAndEntries() // TODO: MAKE DEBUG ONLY (ADD FLAG)
+	// listTablesAndEntries() // TODO: MAKE DEBUG ONLY (ADD FLAG)
 }
