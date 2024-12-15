@@ -28,6 +28,7 @@ func Run() {
 	req_auth_group := router.Group("/auth", handlers.ReqAuthMiddleware)
 	req_auth_group.GET("/app", handlers.AppGET)
 	req_auth_group.POST("/app", handlers.AppPOST)
+	req_auth_group.POST("/removeTokens", handlers.RemoveTokens)
 
 	router.GET("/auth/logout", handlers.LogoutGET)
 
