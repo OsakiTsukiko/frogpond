@@ -19,6 +19,23 @@
                 <div class="email roboto">Mail: {{ .email }}</div>
             </div>
 
+            {{ if .tokens }}
+            <div class="tokens roboto">
+                <div class="title">
+                    Your OAuth Tokens!
+                </div>
+                {{ range .tokens }}
+                <div class="token-box">
+                    <div class="client"><span>Client:</span> {{ .ClientName }}</div>
+                    <div class="token">{{ .Token }}</div>
+                </div>
+                {{ end }}
+            </div>
+            <form action="/auth/removeTokens" method="post">
+                <button class="button-input roboto" type="submit" id="remove-tokens-button">Remove all Tokens!</button>
+            </form>
+            {{ end }}
+
             <form action="/auth/logout" method="get">
                 <button class="button-input roboto" type="submit" id="logout-button">Leap Out!</button>
             </form>
