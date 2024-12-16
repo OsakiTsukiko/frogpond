@@ -4,9 +4,11 @@ import "gorm.io/gorm"
 
 // TODO: HOOK THIS INTO USER
 type Profile struct {
-	UserID      uint   `gorm:"unique;not null"` // foreign key to users table
+	ID     uint `gorm:"primaryKey"`
+	UserID uint `gorm:"unique;not null;constraint:OnDelete:CASCADE;"`
+	// foreign key to users table
 	DisplayName string `gorm:"not null"`
-	Description string `gorm:""`
+	Bio         string `gorm:""`
 	AvatarURL   string `gorm:""`
 	BannerURL   string `gorm:""`
 }

@@ -16,6 +16,23 @@ func (User) TableName() string {
 	return "users"
 }
 
+func (user *User) AfterCreate(tx *gorm.DB) error {
+	// create associated profile
+	profile := Profile{
+		UserID:      user.ID,
+		DisplayName: user.Username, // default display name
+		Bio:         "🐸",
+		AvatarURL:   "",
+		BannerURL:   "",
+	}
+
+	if err := tx.Create(&profile).Error; err != nil {
+		return err
+	}
+
+	return nil
+}
+
 // DATABASE METHODS
 
 // TODO: Maybe suffix all database methods with DB?
