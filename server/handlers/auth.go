@@ -21,7 +21,7 @@ func AuthMiddleware(c *gin.Context) {
 
 func ReqAuthMiddleware(c *gin.Context) {
 	_, ok := UserFromSession(c, sgl.DATABASE)
-	if !ok /* is authentificated */ {
+	if !ok /* is not authentificated */ {
 		// TODO: check if the following is safe
 		c.Redirect(http.StatusFound, "/auth/login?redirect="+url.QueryEscape(c.Request.URL.String()))
 		return
