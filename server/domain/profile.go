@@ -11,6 +11,8 @@ type Profile struct {
 	Bio         string `gorm:""`
 	AvatarURL   string `gorm:""`
 	BannerURL   string `gorm:""`
+
+	User User `gorm:"constraint:OnDelete:CASCADE;foreignKey:UserID;references:ID"`
 }
 
 func (Profile) TableName() string {

@@ -29,6 +29,7 @@ func Run() {
 	req_auth_group.GET("/app", handlers.AppGET)
 	req_auth_group.POST("/app", handlers.AppPOST)
 	req_auth_group.POST("/removeTokens", handlers.RemoveTokens)
+	req_auth_group.POST("/delete", handlers.DeleteUser)
 
 	router.GET("/auth/logout", handlers.LogoutGET)
 
