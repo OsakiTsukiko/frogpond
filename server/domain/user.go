@@ -89,3 +89,15 @@ func (User) AuthenticateUser(db *gorm.DB, username, password string) (*User, err
 
 	return &user, nil
 }
+
+func (user *User) GetTokens(db *gorm.DB) ([]Token, error) {
+	var tokens []Token
+	if err := db.Where("user_id = ?", user.ID).Find(&tokens).Error; err != nil {
+		return nil, err
+	}
+	return tokens, nil
+}
+
+func (user *User) RemoveAllTokens(db *gorm.DB) error {
+	return db.Where("user_id = ?", user.ID).Delete(&Token{}).Error
+}

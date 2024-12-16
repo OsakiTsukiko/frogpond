@@ -5,7 +5,6 @@ import (
 	"encoding/base64"
 	"net/http"
 
-	"github.com/OsakiTsukiko/frogpond/server/database"
 	d "github.com/OsakiTsukiko/frogpond/server/domain"
 	sgl "github.com/OsakiTsukiko/frogpond/server/singleton"
 	"github.com/gin-gonic/gin"
@@ -96,7 +95,7 @@ func AppPOST(c *gin.Context) {
 		return
 	}
 
-	tokens, err := database.GetUserTokens(user.ID, sgl.DATABASE)
+	tokens, err := user.GetTokens(sgl.DATABASE)
 	if err != nil {
 		c.HTML(http.StatusOK, "error.html", gin.H{
 			"error": "Unable to retrieve tokens!",
@@ -113,7 +112,7 @@ func AppPOST(c *gin.Context) {
 		}
 	}
 
-	token, err := generateToken()
+	token_string, err := generateToken()
 	if err != nil {
 		c.HTML(http.StatusOK, "error.html", gin.H{
 			"error": "Error generating token!",
@@ -121,7 +120,13 @@ func AppPOST(c *gin.Context) {
 		return
 	}
 
-	err = database.AddToken(user.ID, token, form.ClientName, sgl.DATABASE)
+	token := d.Token{
+		UserID:     user.ID,
+		Token:      token_string,
+		ClientName: form.ClientName,
+	}
+
+	err = token.Create(sgl.DATABASE)
 	if err != nil {
 		c.HTML(http.StatusOK, "error.html", gin.H{
 			"error": "Error saving token!",
@@ -131,7 +136,7 @@ func AppPOST(c *gin.Context) {
 
 	c.HTML(http.StatusOK, "token.html", gin.H{
 		"client_name": form.ClientName,
-		"token":       token,
+		"token":       token_string,
 	})
 	return
 }

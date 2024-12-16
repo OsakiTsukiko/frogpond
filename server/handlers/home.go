@@ -3,7 +3,6 @@ package handlers
 import (
 	"net/http"
 
-	"github.com/OsakiTsukiko/frogpond/server/database"
 	d "github.com/OsakiTsukiko/frogpond/server/domain"
 	sgl "github.com/OsakiTsukiko/frogpond/server/singleton"
 	"github.com/gin-gonic/gin"
@@ -38,7 +37,7 @@ func HomeGET(c *gin.Context) {
 		return
 	}
 
-	tokens, err := database.GetUserTokens(user.ID, sgl.DATABASE)
+	tokens, err := user.GetTokens(sgl.DATABASE)
 	if err != nil {
 		c.HTML(http.StatusOK, "error.html", gin.H{
 			"error": "Error getting tokens for user!",

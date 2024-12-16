@@ -3,7 +3,6 @@ package handlers
 import (
 	"net/http"
 
-	"github.com/OsakiTsukiko/frogpond/server/database"
 	d "github.com/OsakiTsukiko/frogpond/server/domain"
 	sgl "github.com/OsakiTsukiko/frogpond/server/singleton"
 	"github.com/gin-gonic/gin"
@@ -32,6 +31,6 @@ func RemoveTokens(c *gin.Context) {
 		return
 	}
 
-	database.RemoveAllTokensForUser(user.ID, sgl.DATABASE)
+	user.RemoveAllTokens(sgl.DATABASE)
 	c.Redirect(http.StatusFound, "/")
 }
