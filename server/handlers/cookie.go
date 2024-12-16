@@ -4,22 +4,22 @@ import (
 	"fmt"
 	"time"
 
+	d "github.com/OsakiTsukiko/frogpond/server/domain"
 	sgl "github.com/OsakiTsukiko/frogpond/server/singleton"
 	"github.com/gin-gonic/gin"
 	"github.com/golang-jwt/jwt"
+	"gorm.io/gorm"
 )
 
-// converts session cookie (containing jwt token) to user
-// (username, email, ok)
-// TODO: is email even useful? usernames are unmutable..
-func UserFromSession(c *gin.Context) (string, string, bool) {
-	// get the session cookie from the request
+// SESSION MANAGEMENT
+
+// converts session cookie (containing jwt token) to userid
+func UserFromSession(c *gin.Context, db *gorm.DB) (*d.User, bool) {
 	cookie, err := c.Cookie("session")
-	if err != nil { // cookie doesn't exist
-		return "", "", false
+	if err != nil {
+		return nil, false
 	}
 
-	// parse the JWT token from the cookie
 	token, err := jwt.Parse(cookie, func(token *jwt.Token) (interface{}, error) {
 		// validate the token signing method (HS256 => HMAC)
 		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
@@ -32,33 +32,34 @@ func UserFromSession(c *gin.Context) (string, string, bool) {
 
 	// check if token is valid
 	if err != nil || !token.Valid {
-		return "", "", false
+		return nil, false
 	}
 
-	// extract user information from the JWT claims
+	// extract user id from the JWT claims
 	claims, ok := token.Claims.(jwt.MapClaims)
 	if !ok {
-		return "", "", false
+		return nil, false
 	}
 
-	// extract username and email from claims (or return empty if not found)
-	username, usernameOk := claims["username"].(string)
-	email, emailOk := claims["email"].(string)
+	userid, useridOK := claims["userid"].(float64)
 
-	if !usernameOk || !emailOk {
-		return "", "", false
+	if !useridOK {
+		return nil, false
 	}
 
-	// eeturn the username and email if everything is valid
-	return username, email, true
+	user := &d.User{}
+	if err := user.GetByID(db, uint(userid)); err != nil {
+		return nil, false
+	}
+	return user, true
 }
 
-func SessionFromUser(c *gin.Context, username string, email string) error {
+// converts userid to session cookie
+func SessionFromUser(c *gin.Context, user *d.User) error {
 	// create JWT token (HS256)
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
-		"username": username,
-		"email":    email,
-		"exp":      time.Now().Add(time.Hour * 24 * 8).Unix(),
+		"userid": float64(user.ID),
+		"exp":    time.Now().Add(time.Hour * 24 * 8).Unix(),
 		// 8 day expiration
 	})
 
@@ -81,6 +82,7 @@ func SessionFromUser(c *gin.Context, username string, email string) error {
 	return nil
 }
 
+// remove any session cookie
 func ClearSession(c *gin.Context) {
 	c.SetCookie(
 		"session",

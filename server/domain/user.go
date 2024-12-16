@@ -31,17 +31,13 @@ func (user *User) Delete(db *gorm.DB) error {
 }
 
 // find by user id
-func (User) GetByID(db *gorm.DB, id uint) (*User, error) {
-	var user User
-	err := db.First(&user, id).Error
-	return &user, err
+func (user *User) GetByID(db *gorm.DB, id uint) error {
+	return db.First(&user, id).Error
 }
 
 // find by username
-func (User) GetByUsername(db *gorm.DB, username string) (*User, error) {
-	var user User
-	err := db.Where("username = ?", username).First(&user).Error
-	return &user, err
+func (user *User) GetByUsername(db *gorm.DB, username string) error {
+	return db.Where("username = ?", username).First(&user).Error
 }
 
 // no find by email required for now.

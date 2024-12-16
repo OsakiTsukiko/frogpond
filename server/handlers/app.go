@@ -43,12 +43,10 @@ func AppGET(c *gin.Context) {
 		hw = "display-none"
 	}
 
-	username, email, ok := UserFromSession(c)
+	user, ok := UserFromSession(c, sgl.DATABASE)
 	if !ok {
 		c.HTML(http.StatusOK, "error.html", gin.H{
-			"error": "Corrupted user data!",
-			// this should be UNREACHABLE thanks to
-			// the ReqAuthMiddleware
+			"error": "Corrupted user data!", // Unreachable due to ReqAuth
 		})
 		return
 	}
@@ -57,8 +55,8 @@ func AppGET(c *gin.Context) {
 		"client_name": client_name,
 		"website":     w,
 		"has_website": hw,
-		"username":    username,
-		"email":       email,
+		"username":    user.Username,
+		"email":       user.Email,
 	})
 }
 
@@ -72,18 +70,10 @@ func AppPOST(c *gin.Context) {
 		return
 	}
 
-	username, _, ok := UserFromSession(c)
+	user, ok := UserFromSession(c, sgl.DATABASE)
 	if !ok {
 		c.HTML(http.StatusOK, "error.html", gin.H{
-			"error": "Unable to access user session! UNREACHABLE!",
-		})
-		return
-	}
-
-	user, err := d.User.GetByUsername(d.User{}, sgl.DATABASE, username)
-	if err != nil {
-		c.HTML(http.StatusOK, "error.html", gin.H{
-			"error": "Unable to access user data!",
+			"error": "Corrupted user data!", // Unreachable due to ReqAuth
 		})
 		return
 	}

@@ -4,15 +4,15 @@ import (
 	"net/http"
 	"net/url"
 
-	"github.com/OsakiTsukiko/frogpond/server/singleton"
+	sgl "github.com/OsakiTsukiko/frogpond/server/singleton"
 	"github.com/gin-gonic/gin"
 )
 
 // Redirect if Already Authentificated
 func AuthMiddleware(c *gin.Context) {
-	_, _, ok := UserFromSession(c)
+	_, ok := UserFromSession(c, sgl.DATABASE)
 	if ok /* is authentificated */ {
-		c.Redirect(http.StatusFound, singleton.CFG.Server.DefaultRedirect)
+		c.Redirect(http.StatusFound, sgl.CFG.Server.DefaultRedirect)
 		return
 	}
 
@@ -20,7 +20,7 @@ func AuthMiddleware(c *gin.Context) {
 }
 
 func ReqAuthMiddleware(c *gin.Context) {
-	_, _, ok := UserFromSession(c)
+	_, ok := UserFromSession(c, sgl.DATABASE)
 	if !ok /* is authentificated */ {
 		// TODO: check if the following is safe
 		c.Redirect(http.StatusFound, "/auth/login?redirect="+url.QueryEscape(c.Request.URL.String()))

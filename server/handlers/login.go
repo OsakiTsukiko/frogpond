@@ -62,7 +62,8 @@ func LoginPOST(c *gin.Context) {
 	}
 
 	// create session
-	SessionFromUser(c, user.Username, user.Email)
+	_ = SessionFromUser(c, user)
+	// if session is invalid it will be caught by ReqAuth
 
 	// redirect after login
 	if has_redirect { // redirect to parameter if exists

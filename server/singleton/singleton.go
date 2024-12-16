@@ -5,7 +5,7 @@ import (
 	"log"
 
 	"github.com/OsakiTsukiko/frogpond/server/config"
-	"github.com/OsakiTsukiko/frogpond/server/domain"
+	d "github.com/OsakiTsukiko/frogpond/server/domain"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
@@ -34,13 +34,13 @@ func initDatabase() {
 	}
 
 	// migrate the user model (creates the table if it doesn't exist)
-	err = DATABASE.AutoMigrate(&domain.User{})
+	err = DATABASE.AutoMigrate(&d.User{})
 	if err != nil {
 		log.Fatalf("🚩 Failed to migrate database: %v", err)
 	}
 
 	// migrate the token model (creates the table if it doesn't exist)
-	err = DATABASE.AutoMigrate(&domain.Token{})
+	err = DATABASE.AutoMigrate(&d.Token{})
 	if err != nil {
 		log.Fatalf("🚩 Failed to migrate tokens table: %v", err)
 	}

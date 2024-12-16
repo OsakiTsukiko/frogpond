@@ -81,8 +81,8 @@ func RegisterPOST(c *gin.Context) {
 		return
 	}
 
-	err = SessionFromUser(c, form.Username, form.Email) // create session cookie
-	if err != nil {                                     // return error if it fails
+	err = SessionFromUser(c, &user) // create session cookie
+	if err != nil {                 // return error if it fails
 		parameters = append(parameters, "error="+url.QueryEscape("Failed to create token!"))
 		query := queryFromArray(parameters)
 		c.Redirect(http.StatusFound, "/auth/register"+query)
