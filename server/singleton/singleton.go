@@ -44,6 +44,12 @@ func initDatabase() {
 	if err != nil {
 		log.Fatalf("🚩 Failed to migrate tokens table: %v", err)
 	}
+
+	// migrate the profile model (creates the table if it doesn't exist)
+	err = DATABASE.AutoMigrate(&d.Profile{})
+	if err != nil {
+		log.Fatalf("🚩 Failed to migrate profile table: %v", err)
+	}
 }
 
 func listTablesAndEntries() {

@@ -74,7 +74,7 @@ func RegisterPOST(c *gin.Context) {
 		PasswordHash: string(hashedPassword),
 	}
 
-	if err := sgl.DATABASE.Create(&user).Error; err != nil {
+	if err := user.Create(sgl.DATABASE); err != nil {
 		parameters = append(parameters, "error="+url.QueryEscape("Failed to create user in database!"))
 		query := queryFromArray(parameters)
 		c.Redirect(http.StatusFound, "/auth/register"+query)
