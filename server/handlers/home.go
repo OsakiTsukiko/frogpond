@@ -4,6 +4,7 @@ import (
 	"net/http"
 
 	"github.com/OsakiTsukiko/frogpond/server/database"
+	d "github.com/OsakiTsukiko/frogpond/server/domain"
 	sgl "github.com/OsakiTsukiko/frogpond/server/singleton"
 	"github.com/gin-gonic/gin"
 )
@@ -22,7 +23,7 @@ func HomeGET(c *gin.Context) {
 		"email":    email,
 	}) */
 
-	user, err := database.GetUserByUsername(username, sgl.DATABASE)
+	user, err := d.User.GetByUsername(d.User{}, sgl.DATABASE, username)
 	if err != nil {
 		c.HTML(http.StatusOK, "error.html", gin.H{
 			"error": "Error loading USER from DATABASE!",

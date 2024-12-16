@@ -4,7 +4,8 @@ import (
 	"net/http"
 	"net/url"
 
-	"github.com/OsakiTsukiko/frogpond/server/database"
+	"github.com/OsakiTsukiko/frogpond/server/domain"
+	d "github.com/OsakiTsukiko/frogpond/server/domain"
 	sgl "github.com/OsakiTsukiko/frogpond/server/singleton"
 	"github.com/gin-gonic/gin"
 )
@@ -45,10 +46,16 @@ func LoginPOST(c *gin.Context) {
 	}
 
 	// Get user from database (validate)
-	user, err := database.GetUserFromDatabase(form.Username, form.Password, db)
+	user, err := domain.User.AuthenticateUser(
+		d.User{},
+		db,
+		form.Username,
+		form.Password,
+	)
+
 	if err != nil {
 		// handle validation errors
-		parameters = append(parameters, "error="+url.QueryEscape(err.Error()))
+		parameters = append(parameters, "error="+url.QueryEscape("Invalid Credentials!"))
 		query := queryFromArray(parameters)
 		c.Redirect(http.StatusFound, "/auth/login"+query)
 		return
