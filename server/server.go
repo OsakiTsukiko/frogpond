@@ -17,19 +17,18 @@ func Run() {
 	router.LoadHTMLGlob("templates/*")
 	router.Static("/static", "static")
 
-	router.GET("/", handlers.HomeGET)
-
 	auth_group := router.Group("/auth", handlers.AuthMiddleware)
 	auth_group.GET("/register", handlers.RegisterGET)
 	auth_group.POST("/register", handlers.RegisterPOST)
 	auth_group.GET("/login", handlers.LoginGET)
 	auth_group.POST("/login", handlers.LoginPOST)
 
-	req_auth_group := router.Group("/auth", handlers.ReqAuthMiddleware)
-	req_auth_group.GET("/app", handlers.AppGET)
-	req_auth_group.POST("/app", handlers.AppPOST)
-	req_auth_group.POST("/removeTokens", handlers.RemoveTokens)
-	req_auth_group.POST("/delete", handlers.DeleteUser)
+	req_auth_group := router.Group("/", handlers.ReqAuthMiddleware)
+	req_auth_group.GET("/", handlers.HomeGET)
+	req_auth_group.GET("/auth/app", handlers.AppGET)
+	req_auth_group.POST("/auth/app", handlers.AppPOST)
+	req_auth_group.POST("/auth/removeTokens", handlers.RemoveTokens)
+	req_auth_group.POST("/auth/delete", handlers.DeleteUser)
 
 	router.GET("/auth/logout", handlers.LogoutGET)
 

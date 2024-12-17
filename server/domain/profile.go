@@ -19,6 +19,6 @@ func (Profile) TableName() string {
 	return "profiles"
 }
 
-func (profile *Profile) Create(db *gorm.DB) error {
-	return db.Create(profile).Error
+func (profile *Profile) ForUser(db *gorm.DB, user *User) error {
+	return db.Where("user_id = ", user.ID).First(profile).Error
 }

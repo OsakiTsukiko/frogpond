@@ -22,6 +22,15 @@ type AppForm struct {
 }
 
 func AppGET(c *gin.Context) {
+	user_any, ok := c.Get("user")
+	if !ok {
+		c.HTML(http.StatusOK, "error.html", gin.H{
+			"error": "Unable to ACCESS USER SESSION!!?",
+		})
+		return
+	}
+	user := user_any.(*d.User)
+
 	client_name := c.Query("client_name")
 	has_client_name := client_name != ""
 	website := c.Query("website")
@@ -43,14 +52,6 @@ func AppGET(c *gin.Context) {
 		hw = "display-none"
 	}
 
-	user, ok := UserFromSession(c, sgl.DATABASE)
-	if !ok {
-		c.HTML(http.StatusOK, "error.html", gin.H{
-			"error": "Corrupted user data!", // Unreachable due to ReqAuth
-		})
-		return
-	}
-
 	c.HTML(http.StatusOK, "app.html", gin.H{
 		"client_name": client_name,
 		"website":     w,
@@ -61,26 +62,20 @@ func AppGET(c *gin.Context) {
 }
 
 func AppPOST(c *gin.Context) {
+	user_any, ok := c.Get("user")
+	if !ok {
+		c.HTML(http.StatusOK, "error.html", gin.H{
+			"error": "Unable to ACCESS USER SESSION!!?",
+		})
+		return
+	}
+	user := user_any.(*d.User)
+
 	var form AppForm
 	if err := c.ShouldBind(&form); err != nil {
 		// handle validation errors
 		c.HTML(http.StatusOK, "error.html", gin.H{
 			"error": "Invalid POST Request!",
-		})
-		return
-	}
-
-	user, ok := UserFromSession(c, sgl.DATABASE)
-	if !ok {
-		c.HTML(http.StatusOK, "error.html", gin.H{
-			"error": "Corrupted user data!", // Unreachable due to ReqAuth
-		})
-		return
-	}
-
-	if user == nil {
-		c.HTML(http.StatusOK, "error.html", gin.H{
-			"error": "User not in database!",
 		})
 		return
 	}
