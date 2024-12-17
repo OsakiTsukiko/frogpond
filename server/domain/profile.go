@@ -20,5 +20,5 @@ func (Profile) TableName() string {
 }
 
 func (profile *Profile) ForUser(db *gorm.DB, user *User) error {
-	return db.Where("user_id = ", user.ID).First(profile).Error
+	return db.Where("user_id = ?", user.ID).First(profile).Error
 }

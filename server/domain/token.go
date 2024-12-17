@@ -37,3 +37,7 @@ func (Token) Exists(db *gorm.DB, token string) (bool, error) {
 	err := db.Model(&Token{}).Where("token = ?", token).Count(&count).Error
 	return count > 0, err
 }
+
+func (token *Token) Get(db *gorm.DB, tokenString string) error {
+	return db.Where("token = ?", tokenString).First(token).Error
+}
