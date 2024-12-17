@@ -3,6 +3,7 @@ package server
 import (
 	"log"
 
+	"github.com/OsakiTsukiko/frogpond/server/api"
 	"github.com/OsakiTsukiko/frogpond/server/handlers"
 	sgl "github.com/OsakiTsukiko/frogpond/server/singleton"
 	"github.com/gin-gonic/gin"
@@ -13,6 +14,8 @@ func Run() {
 	router := gin.Default(func(engine *gin.Engine) {
 		// do nothing for now
 	})
+
+	// AUTH (BAKED)
 
 	router.LoadHTMLGlob("templates/*")
 	router.Static("/static", "static")
@@ -31,6 +34,11 @@ func Run() {
 	req_auth_group.POST("/auth/delete", handlers.DeleteUser)
 
 	router.GET("/auth/logout", handlers.LogoutGET)
+
+	// API
+
+	api_req_auth := router.Group("/api", api.ReqAuthToken)
+	api_req_auth.GET("/profile", api.GetProfile)
 
 	if sgl.CFG.Server.UseHTTPS {
 		err := router.RunTLS(":"+sgl.CFG.Server.Port, sgl.CFG.Server.FullChain, sgl.CFG.Server.PrivKey)
